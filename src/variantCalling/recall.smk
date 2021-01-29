@@ -9,7 +9,7 @@ rule recall:
         vcf = "variantCalls/recall/{sample}_{seqID}.unsorted.vcf.gz"
     params:
         support =  "1", #"{support}" ,
-        order = "Vardict,Mutect2,Pisces,Freebayes" #,Manta" #Make sure that the order is correct! Order of methods in configfile
+        order = ",".join([ s for s in config["methods"]]) #"Vardict,Mutect2,Pisces,Freebayes" #,Manta" #Make sure that the order is correct! Order of methods in configfile
     log:
         "logs/variantCalling/recall/{sample}_{seqID}.log"
     singularity:

@@ -10,7 +10,7 @@ somaticFolder=/apps/bio/repos/somatic-twist
 singularityFolder=/apps/bio/singularities/gms_hematology
 
 today=$(date +'%y%m%d') #Until runfolder or should it always be rundate? And then have the runfolder with seq date
-cp ${somaticFolder}/src/configfileSetup/configdefaults200317-gbg.yaml ${today}.config.yaml ## Copy configfile default to runfolder
+cp ${somaticFolder}/src/configfileSetup/configdefaults201110-gbg.yaml ${today}.config.yaml ## Copy configfile default to runfolder
 for i in $(ls ${rawdatafolder}*R1_001.fastq.gz); do ##Add each sample in seq run to the config yaml file What happens to undet.?
   filename=$(echo $i | awk -F/ '{print $NF}')
   sample=${filename%%_S+([[:digit:]])_R1*}
@@ -39,7 +39,7 @@ my_cwd=$(pwd)
 #unset PETASUITE_REFPATH
 #Actually starting the pipeline with snakemake
 #snakemake -p -j 999 --cluster "qsub -V -S /bin/bash -q {cluster.queue} -pe mpi {cluster.n} -e ./logs/stderr.log -o ./logs/stderr.log " \
-snakemake -p -j 999 --drmaa " -V -q {cluster.queue} -pe mpi {cluster.n} -l excl=1 -o ${my_cwd}/logs/stdlogs/{cluster.stdout} -e ${my_cwd}/logs/stdlogs/{cluster.stderr}" \
+snakemake -p -j 200 --drmaa " -V -q {cluster.queue} -pe mpi {cluster.n} -l excl=1 -o ${my_cwd}/logs/stdlogs/{cluster.stdout} -e ${my_cwd}/logs/stdlogs/{cluster.stderr}" \
 --jobname "{cluster.name}_{jobid}" \
 -s ${somaticFolder}/src/somaticPipeline.smk \
 --configfile ${today}.config.yaml \
@@ -47,7 +47,9 @@ snakemake -p -j 999 --drmaa " -V -q {cluster.queue} -pe mpi {cluster.n} -l excl=
 --singularity-args "-e --bind /medstore --bind /seqstore --bind /apps " \
 --latency-wait 60 \
 --cluster-config ${somaticFolder}/cluster-config-gbg.json \
---rerun-incomplete # \ # Uncomment this backslash if running for DAG
+--rerun-incomplete \
+--restart-times 1
+# \ # Uncomment this backslash if running for DAG
 #--dag | dot -Tsvg > dag.svg
 
 #use this -e flag is for clean env in singularity

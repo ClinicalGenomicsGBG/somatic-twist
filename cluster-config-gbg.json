@@ -7,12 +7,14 @@
         "stderr": "{rule}_{wildcards.sample}_err.txt"
     },
     "fastqcR1": {"n": "4"},
-    "multiqcBatch": {"name": "{rule}", "stdout": "run_out.txt", "stderr": "run_err.txt"},
+    "multiqcBatch": {"name": "{rule}", "stdout": "multiqc_run_out.txt", "stderr": "multiqc_run_err.txt"},
+    "sortBatchStats": {"name": "{rule}", "stdout": "batchstat_run_out.txt", "stderr": "batchstat_run_err.txt"},
     "cutadapt": {"n": "20"},  #15 min w 8 cores
     "bwa_mem": {"n": "20"},
     "pindel": {"n": "8"},
     "lofreq": {"n": "20"},
     "vardict": {"n": "8"},
+    "Mutect2": {"n": "2"},
     "vep": {"n": "20"},
     "igv": {"n": "1"}
 }
