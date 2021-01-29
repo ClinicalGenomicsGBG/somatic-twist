@@ -277,9 +277,9 @@ for snv in vcf_snv.fetch():
 
                     line=[runID, sample, gene, snv.contig, str(snv.pos), snv.ref, snv.alts[0], str(snv.info["AF"][0]), str(snv.info["DP"]), transcript, codingName, ensp, consequence, maxPopAf, maxPop, callers]
                     if snv.info["DP"] < medCov:
-                        worksheetSNV.write_row(row,col,line, italicFormat)
+                        worksheetIntron.write_row(row,col,line, italicFormat)
                     else:
-                        worksheetSNV.write_row(row,col,line)
+                        worksheetIntron.write_row(row,col,line)
                     row += 1
 
 ###########################################
