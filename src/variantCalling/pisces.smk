@@ -11,7 +11,7 @@ rule pisces:
     params:
         outfolder = "variantCalls/callers/pisces/{sample}_{seqID}",
         bed = config["bed"]["bedfile"]
-    threads: 1
+    threads: 10
     log:
         "logs/variantCalling/pisces/{sample}_{seqID}.log"
     singularity:

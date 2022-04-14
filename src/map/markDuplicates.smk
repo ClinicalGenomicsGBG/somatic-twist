@@ -10,9 +10,11 @@ rule markDuplicates:
     threads:
         4 ##2??
     singularity:
+        #config["singularitys"]["gatk4"] # Alternate picard version
         config["singularitys"]["bwa"]
     shell:
-        "(java -Xmx4g -jar /opt/conda/share/picard-2.20.1-0/picard.jar MarkDuplicates INPUT={input.bam} OUTPUT={output.bam} METRICS_FILE={output.metric}) &> {log}"
+        "(nice -n 19 java -Xmx4g -jar /opt/conda/share/picard-2.20.1-0/picard.jar MarkDuplicates INPUT={input.bam} OUTPUT={output.bam} METRICS_FILE={output.metric}) &> {log}"
+        #"(gatk MarkDuplicates --INPUT={input.bam} --OUTPUT={output.bam} --METRICS_FILE={output.metric}) &> {log}" # Alternate picard version
 
 rule samtools_index_dedup:
     input:
