@@ -286,7 +286,10 @@ for indel in vcf_indel.fetch():
         maxPopIndel = csqIndel.split("|")[57] #[61]
 
         indelTranscript = csqIndel.split("|")[10].split(":")[0]
-        indelCodingName = csqIndel.split("|")[10].split(":")[1]
+        if len(csqIndel.split("|")[10].split(":")) > 1:
+            indelCodingName = csqIndel.split("|")[10].split(":")[1]
+        else:
+            indelCodingName = ''
         indelEnsp = csqIndel.split("|")[11]
         # indelIgv="external:IGV/"+indelGene+"-"+indel.contig+"_"+str(int(indel.pos)-1)+"_"+str(int(indel.pos)-1+len(alt))+".svg"
 

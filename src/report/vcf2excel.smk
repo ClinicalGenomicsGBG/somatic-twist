@@ -29,7 +29,7 @@ rule vcf2excel:
         hematoCount = config["configCache"]["hemato"],
         variantsLog = config["configCache"]["variantlist"],
         shortCov = "qc/{sample}_{seqID}/{sample}_{seqID}_coverageShortHotspot.tsv",
-        igv = "Results/{sample}_{seqID}/Reports/IGV/done-igv.txt"
+        #igv = "Results/{sample}_{seqID}/Reports/IGV/done-igv.txt" # Do not need the igv stuff /Alvar 
     output:
         "Results/{sample}_{seqID}/Reports/{sample}_{seqID}.xlsx"
     params:

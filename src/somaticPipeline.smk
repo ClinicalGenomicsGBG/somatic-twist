@@ -2,6 +2,10 @@
 ##Specify configfile and singularity folder in snakemake command.
 localrules: makeContainersList
 
+import re
+
+os.umask(2)  # "Intermediary" solution to setting group rw for downstream rules
+
 #shell.prefix('set +u; PATH=/apps/bio/software/singularity/bin/:$PATH; set -u ')
 #shell.prefix('export SINGULARITY_BIND="/medstore,/seqstore,/apps ')
 #shell.prefix('export DRMAA_LIBRARY_PATH=/apps/univa-gridengine/lib/lx-amd64/libdrmaa.so.1.0 ')
@@ -28,7 +32,7 @@ rule all:
 wildcard_constraints:
     # sample = "[a-zA-Z0-9-_\.]+",
     # support = "3", #"\.[0-9]+\."
-    seqID = config["seqID"]["sequencerun"]
+    seqID = re.escape(config["seqID"]["sequencerun"])
 
 
 ### QC modules
